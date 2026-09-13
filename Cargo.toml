@@ -1,0 +1,10 @@
+[package]
+name = "double-pendulum"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+nannou = "0.20.0"
+
+[profile.dev.package."*"]
+opt-level = 3
