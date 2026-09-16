@@ -108,6 +108,16 @@ fn view(app: &App, model: &Model, _view: Entity) {
     let draw = app.draw();
     draw.background().color(WHITE);
 
+    // Draw text on the screen
+    let msg = format!(
+        "m1 : {} kg       m2 : {} kg       l1 : {} m        l2 : {} m", 
+        model.m1, model.m2, model.l1, model.l2
+    );
+    draw.text(&msg)
+        .xy(pt2(0.0, 280.0)) // Position at the center of the window
+        .font_size(15)     // Set text size
+        .color(BLACK);     // Set text color
+
     // Pivot: fixed point near the top-centre of the window.
     let pivot = app.window_rect().pad_top(150.0).mid_top();
 
