@@ -1,7 +1,7 @@
 use nannou::prelude::*;
 
 const G: f64 = 9.806;
-const FIXED_DT: f64 = 0.0001;
+const FIXED_DT: f64 = 0.01;
 const PIXELS_PER_METER: f32 = 150.0;
 
 struct Model {
@@ -30,10 +30,10 @@ fn model(_app: &App) -> Model {
         omega1: 0.0,
         omega2: 0.0,
 
-        m1: 4.0, 
-        m2: 1.0, 
-        l1: 1.5, 
-        l2: 1.0, 
+        m1: 1.0,
+        m2: 1.0,
+        l1: 1.5,
+        l2: 1.0,
 
         accumulator: 0.0,
     }
@@ -56,9 +56,7 @@ fn derivatives(s: &State, m: &Model) -> State {
 
     let alpha2 = (2.0
         * delta.sin()
-        * (w1 * w1 * l1 * (m1 + m2)
-            + G * (m1 + m2) * t1.cos()
-            + w2 * w2 * l2 * m2 * delta.cos()))
+        * (w1 * w1 * l1 * (m1 + m2) + G * (m1 + m2) * t1.cos() + w2 * w2 * l2 * m2 * delta.cos()))
         / (l2 * denom);
 
     [w1, alpha1, w2, alpha2]
@@ -110,13 +108,13 @@ fn view(app: &App, model: &Model, _view: Entity) {
 
     // Draw text on the screen
     let msg = format!(
-        "m1 : {} kg       m2 : {} kg       l1 : {} m        l2 : {} m", 
+        "m1 : {} kg       m2 : {} kg       l1 : {} m        l2 : {} m",
         model.m1, model.m2, model.l1, model.l2
     );
     draw.text(&msg)
         .xy(pt2(0.0, 280.0)) // Position at the center of the window
-        .font_size(15)     // Set text size
-        .color(BLACK);     // Set text color
+        .font_size(15) // Set text size
+        .color(BLACK); // Set text color
 
     // Pivot: fixed point near the top-centre of the window.
     let pivot = app.window_rect().pad_top(150.0).mid_top();
